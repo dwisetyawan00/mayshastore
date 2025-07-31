@@ -52,26 +52,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      {/* HEADER */}
-          <header className="bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 border-b border-white/20 sticky top-0 z-50">
-            <div className="container mx-auto px-6 py-3">
-              <div className="flex items-center">
-                <div className="flex-shrink-0" style={{ width: 80, height: 80 }}>
-                  <img
-                    src={`/${LOGO_FILE}`}
-                    alt={LOGO_ALT}
-                    className="w-20 h-20 object-contain"
-                    loading="eager"
-                    draggable={false}
-                  />
-                </div>
-                <div className="ml-4 flex flex-col justify-center">
-                  <span className="text-2xl font-extrabold text-white leading-tight">Maysha Store</span>
-                  <span className="text-blue-200 text-sm leading-tight">Solusi Terpercaya Kebutuhan Rumah Tangga</span>
-                </div>
-              </div>
-            </div>
-          </header>
       {/* HERO & SEARCH */}
       <section className="container mx-auto px-6 py-8">
         <div className="text-center mb-12">

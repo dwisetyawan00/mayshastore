@@ -4,6 +4,7 @@ import BuyPopup from './BuyPopup'
 import CommentSection from './CommentSection'
 import useProductComments from '../hooks/useProductComments'
 import { useSession } from 'next-auth/react'
+import Link from 'next/link'
 
 function ProductCardContent({
   product,
@@ -47,23 +48,28 @@ function ProductCardContent({
         </div>
       )}
 
-      {/* Gambar Produk */}
-      <div className={`relative aspect-square flex items-center justify-center`}>
-        <img
-          src={product.image}
-          alt={product.name}
-          className={`w-full h-full object-cover cursor-pointer transition-all duration-300`}
-          onClick={onImageClick}
-          draggable={false}
-        />
-      </div>
+      {/* Gambar Produk (klik ke detail) */}
+      <Link href={`/katalog/${product.id}`}>
+        <div className={`relative aspect-square flex items-center justify-center cursor-pointer transition-all duration-300`}>
+          <img
+            src={product.image}
+            alt={product.name}
+            className={`w-full h-full object-cover`}
+            // onClick={onImageClick} // GANTI: untuk modal gambar, cukup di detail saja
+            draggable={false}
+          />
+        </div>
+      </Link>
 
       {/* Konten Produk */}
       <div className="p-6">
         <div className="mb-3">
-          <h3 className="font-bold text-gray-800 text-lg mb-1 line-clamp-2 group-hover:text-blue-600 transition-colors text-center">
-            {product.name}
-          </h3>
+          {/* Nama Produk (klik ke detail) */}
+          <Link href={`/katalog/${product.id}`}>
+            <h3 className="font-bold text-gray-800 text-lg mb-1 line-clamp-2 group-hover:text-blue-600 transition-colors text-center cursor-pointer">
+              {product.name}
+            </h3>
+          </Link>
           <p className="text-sm text-gray-600 line-clamp-2 text-center">{product.description}</p>
         </div>
 
@@ -78,22 +84,22 @@ function ProductCardContent({
         )}
 
         {/* Harga dan Stok */}
-          <div className="flex flex-row items-center gap-2 mb-4 flex-wrap">
-            <div suppressHydrationWarning>
-              {product.originalPrice && (
-                <span className="text-sm text-gray-400 line-through mr-2">
-                  {formatPrice(product.originalPrice)}
-                </span>
-              )}
-              <span className="text-xl font-bold text-gray-800">{formatPrice(product.price)}</span>
-            </div>
-            <div className={`
-              text-xs px-3 py-1 rounded-full flex-shrink-0 min-w-max
-              ${stockStatus.bg} ${stockStatus.text}
-            `}>
-              {stockStatus.label}
-            </div>
+        <div className="flex flex-row items-center gap-2 mb-4 flex-wrap">
+          <div suppressHydrationWarning>
+            {product.originalPrice && (
+              <span className="text-sm text-gray-400 line-through mr-2">
+                {formatPrice(product.originalPrice)}
+              </span>
+            )}
+            <span className="text-xl font-bold text-gray-800">{formatPrice(product.price)}</span>
           </div>
+          <div className={`
+            text-xs px-3 py-1 rounded-full flex-shrink-0 min-w-max
+            ${stockStatus.bg} ${stockStatus.text}
+          `}>
+            {stockStatus.label}
+          </div>
+        </div>
         {/* Tombol aksi (hanya tampil di grid, tidak di preview/modal) */}
         {mode === 'grid' && (
           <>

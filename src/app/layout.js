@@ -3,8 +3,10 @@ import './globals.css'
 import Footer from '@/components/Footer'
 import BackToTopButton from '@/components/BackToTopButton'
 import SessionProviderLayout from '@/components/SessionProviderLayout'
+import LoadingOverlay from '@/components/LoadingOverlay'
+import Header from '@/components/Header' // Pastikan ini default export!
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter'
@@ -66,7 +68,6 @@ export const metadata = {
   },
   verification: {
     google: 'your-google-verification-code',
-    yandex: 'your-yandex-verification-code',
   },
 }
 
@@ -120,51 +121,26 @@ export default function RootLayout({ children }) {
           `
         }} />
       </head>
-      <body className={`${inter.className} antialiased min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100`}>
+      <body className={`${inter.className} antialiased min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100`}>
         <SessionProviderLayout>
-          {/* Loading Screen */}
-          <div id="loading-screen" className="loading-screen">
-            <div className="text-center">
-              <div className="w-16 h-16 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-4"></div>
-              <div className="text-white font-medium">Loading...</div>
-            </div>
-          </div>
-
+          <Header />
+          <LoadingOverlay />
           {/* Skip to main content for accessibility */}
-          <a 
-            href="#main-content" 
+          <a
+            href="#main-content"
             className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-lg z-50 focus:z-[9999] transition-all duration-200"
           >
             Skip to main content
           </a>
-
-          {/* Main Content */}
-          <main id="main-content" className="relative">
-            {children}
-          </main>
-
-          {/* Footer */}
-          <Footer />
-
-          {/* Back to Top Button */}
+          <div className="flex flex-col min-h-screen">
+            <main id="main-content" className="flex-1 relative">
+              {children}
+            </main>
+            <Footer />
+          </div>
           <BackToTopButton />
-
-          {/* Scripts */}
           <script dangerouslySetInnerHTML={{
             __html: `
-              // Hide loading screen when page is loaded
-              window.addEventListener('load', function() {
-                const loadingScreen = document.getElementById('loading-screen');
-                if (loadingScreen) {
-                  setTimeout(() => {
-                    loadingScreen.classList.add('hidden');
-                    setTimeout(() => {
-                      loadingScreen.remove();
-                    }, 500);
-                  }, 300);
-                }
-              });
-
               // Performance monitoring
               if ('performance' in window) {
                 window.addEventListener('load', function() {
@@ -174,7 +150,6 @@ export default function RootLayout({ children }) {
                   }
                 });
               }
-
               // Service Worker registration for PWA
               if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function() {
@@ -191,7 +166,7 @@ export default function RootLayout({ children }) {
           }} />
         </SessionProviderLayout>
         {/* WA Floating Button */}
-          <a
+        <a
           href="https://wa.me/6281234567890?text=Halo%20Admin%20saya%20mau%20tanya%20produk"
           className="fixed bottom-6 right-6 z-[9999] flex flex-col items-center group"
           target="_blank"
@@ -200,7 +175,7 @@ export default function RootLayout({ children }) {
         >
           <span className="w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center border-2 border-green-500 group-hover:scale-110 transition-transform duration-200">
             <img
-              src="/wa.png" // Ganti dengan /wa.png jika ingin universal
+              src="/wa.png"
               alt="Chat WA"
               className="w-9 h-9 object-contain"
               style={{ filter: 'drop-shadow(0 2px 8px #22c55e33)' }}
